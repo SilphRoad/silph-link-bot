@@ -33,6 +33,10 @@ class Database(object):
         log.debug('Binding MySQL to ORM')
         self.mysql.bind_tables(Table.metadata)
 
+    async def close(self):
+        await self.mysql.close()
+        await self.redis.quit()
+
 
 def parse_redis_url(redis_url):
     pattern = r'redis:\/\/([a-zA-Z0-9.]*):?([0-9]*)?'
